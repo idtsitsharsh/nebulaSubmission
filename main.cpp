@@ -89,7 +89,7 @@ int eval_simple_expression(const string& expr) {
     int result, num;
     char op = '+';
 
-    iss >> result;  // read first number
+    iss >> result; 
 
     while (iss >> op >> num) {
         switch (op) {
@@ -164,11 +164,11 @@ void shell_let(const vector<string>& tokens) {
     for (size_t i = 1; i < tokens.size(); ++i)
         full_expr += tokens[i];
 
-    // Handle optional variable assignment: e.g., x=2+3
+
     size_t eq_pos = full_expr.find('=');
     string expr;
     if (eq_pos != string::npos) {
-        expr = full_expr.substr(eq_pos + 1);  // get part after '='
+        expr = full_expr.substr(eq_pos + 1);  
     } else {
         expr = full_expr;
     }
@@ -283,7 +283,7 @@ void execute_command(vector<string>& tokens) {
 
     if (tokens[0] == "cd") {
         vector<char*> args = convert_to_cstr_args(tokens);
-        shell_cd(args.data());  // call your cd function
+        shell_cd(args.data()); 
         return;
     }
 
@@ -344,8 +344,7 @@ void execute_command(vector<string>& tokens) {
                 if (eq != string::npos) {
                     string name = alias_def.substr(0, eq);
                     string value = alias_def.substr(eq + 1);
-    
-                    // Remove quotes if present
+
                     if (!value.empty() && value.front() == '\'') value = value.substr(1);
                     if (!value.empty() && value.back() == '\'') value.pop_back();
     
@@ -459,17 +458,13 @@ int main() {
     while (true) {
         string input = read_input();
         vector<string> tokens = tokenize(input);
-
-        // 🔁 Alias Expansion Logic
         if (!tokens.empty() && aliases.count(tokens[0])) {
             string alias_expansion = aliases[tokens[0]];
             vector<string> alias_tokens;
             istringstream iss(alias_expansion);
             string t;
             while (iss >> t) alias_tokens.push_back(t);
-        
-            // Replace the alias in tokens
-            tokens.erase(tokens.begin()); // remove alias keyword
+            tokens.erase(tokens.begin()); 
             tokens.insert(tokens.begin(), alias_tokens.begin(), alias_tokens.end());
         }       
 
